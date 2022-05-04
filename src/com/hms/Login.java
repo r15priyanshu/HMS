@@ -143,6 +143,11 @@ public class Login extends javax.swing.JFrame {
         if(email.equals("") || password.equals(""))
         {
             JOptionPane.showMessageDialog(null,"Please enter all details !!");
+        }else if(email.equals("ADMIN") && password.equals("ADMIN"))
+        {
+            System.out.println("Login Successful for :"+email);
+            setVisible(false);
+            new AdminHome().setVisible(true);
         }else{
             System.out.println("Login Request for :"+email);
             String query=String.format("select * from hmsadmin where email='%s'",email);
@@ -151,11 +156,11 @@ public class Login extends javax.swing.JFrame {
             {
                 if(rs.next())
                 {
-                   if(rs.getString("password").equals(password) && rs.getString("accstatus").equals("true"))
+                    if(rs.getString("password").equals(password) && rs.getString("accstatus").equals("true"))
                    {
                        System.out.println("Login Successful for :"+email);
                        setVisible(false);
-                       new AdminHome().setVisible(true);
+                       new DashBoard().setVisible(true);
                    }else if(rs.getString("password").equals(password) && rs.getString("accstatus").equals("false"))
                    {
                        JOptionPane.showMessageDialog(null,"Your Account is still not activated. Kindly wait for the admin to approve !!");

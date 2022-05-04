@@ -3,6 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.hms;
+import com.hms.jdbc.*;
+import java.sql.*;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -26,21 +32,191 @@ public class AdminHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jLabel1 = new javax.swing.JLabel();
+        jlogout = new javax.swing.JButton();
+        jexit = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jemail = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jclear = new javax.swing.JButton();
+        jsearch = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel1.setText("Welcome Admin !!");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 49, 451, -1));
+
+        jlogout.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logout.png"))); // NOI18N
+        jlogout.setText("LOGOUT");
+        jlogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jlogoutActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jlogout, new org.netbeans.lib.awtextra.AbsoluteConstraints(938, 68, -1, -1));
+
+        jexit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jexit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
+        jexit.setText("EXIT");
+        jexit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jexitActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jexit, new org.netbeans.lib.awtextra.AbsoluteConstraints(1178, 68, -1, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setText("Search By Email");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 157, 98, -1));
+
+        jemail.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        getContentPane().add(jemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(432, 154, 289, -1));
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Name", "Email", "Security Question", "Address", "Account Status"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(82, 212, 1206, -1));
+
+        jclear.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jclear.setText("CLEAR");
+        jclear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jclearActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jclear, new org.netbeans.lib.awtextra.AbsoluteConstraints(938, 154, -1, -1));
+
+        jsearch.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jsearch.setText("SEARCH");
+        jsearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jsearchActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(791, 154, -1, -1));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/adminHome.png"))); // NOI18N
+        jLabel4.setText("jLabel4");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1370, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jlogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jlogoutActionPerformed
+        // TODO add your handling code here:
+        int option=JOptionPane.showConfirmDialog(null,"Do you want to Logout ?","Select proper option",JOptionPane.YES_NO_OPTION);
+        if(option==0)
+        {
+            setVisible(false);
+            new Login().setVisible(true);
+        }
+        
+    }//GEN-LAST:event_jlogoutActionPerformed
+
+    private void jexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jexitActionPerformed
+        // TODO add your handling code here:
+        int option=JOptionPane.showConfirmDialog(null,"Do you want to close the Application ?","Select proper option",JOptionPane.YES_NO_OPTION);
+        if(option==0)
+            System.exit(0);
+        
+    }//GEN-LAST:event_jexitActionPerformed
+
+    private void jclearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jclearActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        new AdminHome().setVisible(true);
+    }//GEN-LAST:event_jclearActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+        ResultSet rs=Select.executeSelectQuery("Select * from hmsadmin");
+        DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
+        model.setRowCount(0);
+        try
+        {
+            while(rs.next())
+            {
+                model.addRow(new Object[]{rs.getString(2),rs.getString(3),rs.getString(5),rs.getString(8),rs.getString(7)});
+            }
+            rs.close();
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_formComponentShown
+
+    private void jsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsearchActionPerformed
+        // TODO add your handling code here:
+        String email=jemail.getText();
+        ResultSet rs=Select.executeSelectQuery("Select * from hmsadmin where email='"+email+"'");
+        DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
+        model.setRowCount(0);
+        try
+        {
+            while(rs.next())
+            {
+                model.addRow(new Object[]{rs.getString(2),rs.getString(3),rs.getString(5),rs.getString(8),rs.getString(7)});
+            }
+            rs.close();
+        }catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null,e);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jsearchActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int row=jTable1.getSelectedRow();
+        TableModel model=jTable1.getModel();
+        String email=model.getValueAt(row,1).toString();
+        String status=model.getValueAt(row,4).toString();
+        if(status.equals("true"))
+        {
+            status="false";
+        }else{
+            status="true";
+        }
+        try
+        {
+            int option=JOptionPane.showConfirmDialog(null,"Do you want to change status for "+email+" ?","Select",JOptionPane.YES_NO_OPTION);
+            if(option==0)
+            {
+                InsertUpdateDelete.executeCustomQuery("update hmsadmin set accstatus='"+status+"' where email='"+email+"'","Status Changed Successfully !!");
+                setVisible(false);
+                new AdminHome().setVisible(true);
+            }
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -78,5 +254,15 @@ public class AdminHome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton jclear;
+    private javax.swing.JTextField jemail;
+    private javax.swing.JButton jexit;
+    private javax.swing.JButton jlogout;
+    private javax.swing.JButton jsearch;
     // End of variables declaration//GEN-END:variables
 }
