@@ -53,12 +53,22 @@ public class DashBoard extends javax.swing.JFrame {
         jcustomerCheckIn.setForeground(new java.awt.Color(102, 0, 0));
         jcustomerCheckIn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/customerRegistrationAndCheckIN.png"))); // NOI18N
         jcustomerCheckIn.setText("Customer Check In");
+        jcustomerCheckIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcustomerCheckInActionPerformed(evt);
+            }
+        });
         getContentPane().add(jcustomerCheckIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(356, 28, -1, -1));
 
         jcustomerCheckout.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jcustomerCheckout.setForeground(new java.awt.Color(102, 0, 0));
         jcustomerCheckout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/customerCheckOut.png"))); // NOI18N
         jcustomerCheckout.setText("Customer Check Out");
+        jcustomerCheckout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcustomerCheckoutActionPerformed(evt);
+            }
+        });
         getContentPane().add(jcustomerCheckout, new org.netbeans.lib.awtextra.AbsoluteConstraints(626, 28, -1, -1));
 
         jlogout.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -111,6 +121,16 @@ public class DashBoard extends javax.swing.JFrame {
         // TODO add your handling code here:
         new ManageRoom().setVisible(true);
     }//GEN-LAST:event_jmanageRoomActionPerformed
+
+    private void jcustomerCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcustomerCheckInActionPerformed
+        // TODO add your handling code here:
+        new CustomerCheckIn().setVisible(true);
+    }//GEN-LAST:event_jcustomerCheckInActionPerformed
+
+    private void jcustomerCheckoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcustomerCheckoutActionPerformed
+        // TODO add your handling code here:
+        new CustomerCheckOut().setVisible(true);
+    }//GEN-LAST:event_jcustomerCheckoutActionPerformed
 
     /**
      * @param args the command line arguments

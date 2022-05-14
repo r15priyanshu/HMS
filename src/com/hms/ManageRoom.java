@@ -137,9 +137,11 @@ public class ManageRoom extends javax.swing.JFrame {
     }//GEN-LAST:event_jroomNumberTextActionPerformed
 
     private void jexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jexitActionPerformed
-        int option=JOptionPane.showConfirmDialog(null,"Do you want to close the Application ?","Select proper option",JOptionPane.YES_NO_OPTION);
+        int option=JOptionPane.showConfirmDialog(null,"Do you want to close the Manage Room Section ?","Select proper option",JOptionPane.YES_NO_OPTION);
         if(option==0)
-            System.exit(0);        // TODO add your handling code here:
+        {
+            setVisible(false);
+        }
     }//GEN-LAST:event_jexitActionPerformed
 
     private void jaddRoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jaddRoomActionPerformed
