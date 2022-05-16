@@ -91,6 +91,7 @@ public class CustomerCheckIn extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
@@ -302,7 +303,7 @@ public class CustomerCheckIn extends javax.swing.JFrame {
         try
         {
             System.out.println("Request received for booking room "+email);
-            String query=String.format("insert into customers(name,mobilenumber,nationality,gender,email,idproof,address,checkindate,room) values('%s',%d,'%s','%s','%s','%s','%s','%s','%s')",name,Integer.parseInt(mobile),nationality,gender,email,idproof,address,checkindate,room);
+            String query=String.format("insert into customers(name,mobilenumber,nationality,gender,email,idproof,address,checkindate,room) values('%s',%s,'%s','%s','%s','%s','%s','%s','%s')",name,mobile,nationality,gender,email,idproof,address,checkindate,room);
             InsertUpdateDelete.executeCustomQuery(query,"Room Successfully Booked !!");
             query=String.format("update rooms set status='Booked' where roomnumber='%s'",room);
             InsertUpdateDelete.executeCustomQuery(query,"");

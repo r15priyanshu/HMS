@@ -4,9 +4,16 @@
  */
 package com.hms;
 
+import com.hms.jdbc.InsertUpdateDelete;
 import com.hms.jdbc.Select;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,6 +25,10 @@ public class CustomerCheckOut extends javax.swing.JFrame {
     /**
      * Creates new form CustomerCheckOut
      */
+    int id;
+    String room;
+    String bed;
+    String roomType;
     public CustomerCheckOut() {
         initComponents();
     }
@@ -34,7 +45,7 @@ public class CustomerCheckOut extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jsearchText = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jsearchButton = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -51,7 +62,7 @@ public class CustomerCheckOut extends javax.swing.JFrame {
         jamountText = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jemailText = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jcheckoutButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -59,6 +70,7 @@ public class CustomerCheckOut extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -78,11 +90,16 @@ public class CustomerCheckOut extends javax.swing.JFrame {
         jsearchText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         getContentPane().add(jsearchText, new org.netbeans.lib.awtextra.AbsoluteConstraints(532, 103, 251, -1));
 
-        jButton1.setBackground(new java.awt.Color(102, 0, 0));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Search");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(832, 103, -1, -1));
+        jsearchButton.setBackground(new java.awt.Color(102, 0, 0));
+        jsearchButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jsearchButton.setForeground(new java.awt.Color(255, 255, 255));
+        jsearchButton.setText("Search");
+        jsearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jsearchButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jsearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(832, 103, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Customer Name");
@@ -148,16 +165,26 @@ public class CustomerCheckOut extends javax.swing.JFrame {
         jemailText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         getContentPane().add(jemailText, new org.netbeans.lib.awtextra.AbsoluteConstraints(1048, 326, 250, -1));
 
-        jButton2.setBackground(new java.awt.Color(102, 0, 0));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Check Out");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 379, -1, -1));
+        jcheckoutButton.setBackground(new java.awt.Color(102, 0, 0));
+        jcheckoutButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jcheckoutButton.setForeground(new java.awt.Color(255, 255, 255));
+        jcheckoutButton.setText("Check Out");
+        jcheckoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcheckoutButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jcheckoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(53, 379, -1, -1));
 
         jButton3.setBackground(new java.awt.Color(102, 0, 0));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Clear");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(193, 379, 110, -1));
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/exit.png"))); // NOI18N
@@ -197,7 +224,7 @@ public class CustomerCheckOut extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        int option=JOptionPane.showConfirmDialog(null,"Do you want to close the Application ?","Select proper option",JOptionPane.YES_NO_OPTION);
+        int option=JOptionPane.showConfirmDialog(null,"Do you want to close Customer Check-OUT Section ?","Select proper option",JOptionPane.YES_NO_OPTION);
         if(option==0)
         {
             setVisible(false);
@@ -212,7 +239,7 @@ public class CustomerCheckOut extends javax.swing.JFrame {
         {
             while(rs.next())
             {
-                model.addRow(new Object[]{rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString("room")});
+                model.addRow(new Object[]{rs.getInt(1),rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9),rs.getString("room")});
             }
         }catch(Exception e)
         {
@@ -220,6 +247,162 @@ public class CustomerCheckOut extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_formComponentShown
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int option=JOptionPane.showConfirmDialog(null,"Do you want to clear all details ?","Select proper option",JOptionPane.YES_NO_OPTION);
+        if(option==0)
+        {
+            setVisible(false);
+            new CustomerCheckOut().setVisible(true);
+        }     
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jcheckoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcheckoutButtonActionPerformed
+        // TODO add your handling code here:
+        String name=jnameText.getText();
+        if(name.equals(""))
+        {
+           JOptionPane.showMessageDialog(null,"Kindly search for the Customer first !! No Customer Selected !!");
+        }else
+        {
+            System.out.println("Check out started for "+name);
+            String email=jemailText.getText();
+            String checkindate=jcheckinText.getText();
+            String checkoutdate=jcheckoutText.getText();
+            String mobile=jmobileText.getText();
+            String perdaycost=jpriceText.getText();
+            String noofdaysstayed=jdaysText.getText();
+            String amount=jamountText.getText();
+            String query=String.format("update customers set checkoutdate='%s',days='%d',totalamount=%d where id=%d",checkoutdate,Integer.parseInt(noofdaysstayed),Integer.parseInt(amount),id);
+            InsertUpdateDelete.executeCustomQuery(query,"");
+            query=String.format("update rooms set status='Not Booked' where roomnumber=(Select room from customers where id=%d)",id);
+            InsertUpdateDelete.executeCustomQuery(query,"");
+            
+            // generation PDF now
+            System.out.println("Billing started for "+name);
+            String path="D:\\HMS\\";
+            com.itextpdf.text.Document doc=new com.itextpdf.text.Document();
+            try
+            {
+                PdfWriter.getInstance(doc,new FileOutputStream(path+""+id+".pdf"));
+                doc.open();
+                Paragraph p=new Paragraph("ANSHU HOTEL MANAGEMENT SYSTEM\n");
+                doc.add(p);
+                p=new Paragraph("**********************************************************\n");
+                doc.add(p);
+                p=new Paragraph("Customer Details : \n");
+                doc.add(p);
+                p=new Paragraph("\tName: "+name+"\n"+"\tMobile Number: "+mobile+"\n"+"\tEmail: "+email);
+                doc.add(p);
+                p=new Paragraph("**********************************************************\n");
+                doc.add(p);
+                p=new Paragraph("Room Details : \n");
+                doc.add(p);
+                p=new Paragraph("\tRoom Number: "+room+"\n"+"\tRoom Type: "+roomType+"\n"+"\tBed: "+bed+"\n\tPrice Per Day: Rs."+perdaycost);
+                doc.add(p);
+                p=new Paragraph("**********************************************************\n");
+                doc.add(p);
+                p=new Paragraph("Bill Details : \n");
+                doc.add(p);
+                p=new Paragraph("\tBill ID: "+id+"\n");
+                doc.add(p);
+                p=new Paragraph("\tCheck-IN Date: "+checkindate+"\n\tCheck-OUT Date: "+checkoutdate+"\n\tNo. of Days Stayed: "+noofdaysstayed+"\n\tTotal Amount: "+amount);
+                doc.add(p);
+                p=new Paragraph("**********************************************************\n");
+                doc.add(p);
+                p=new Paragraph("Thank You. Please Visit Again !!\n");
+                doc.add(p);
+                
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(null,e);
+            }
+            doc.close();
+            
+            //opening of pdf(bill)
+            int option=JOptionPane.showConfirmDialog(null,"Do you want to Open the Bill ?","Select proper option",JOptionPane.YES_NO_OPTION);
+            if(option==0)
+            {
+                try
+                {
+                    if(new File(path+id+".pdf").exists())
+                    {
+                        Process p=Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+path+id+".pdf");
+                    }else
+                    {
+                        JOptionPane.showMessageDialog(null,"File Doesnot exists!!");
+                    }
+                }catch(Exception e)
+                {
+                    JOptionPane.showMessageDialog(null,e);
+                }
+            }
+            setVisible(false);
+            new CustomerCheckOut().setVisible(true);
+            System.out.println("Billing completed for "+name);
+            System.out.println("Check out completed for "+name);
+        }   
+    }//GEN-LAST:event_jcheckoutButtonActionPerformed
+
+    private void jsearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsearchButtonActionPerformed
+        // TODO add your handling code here:
+        String param=jsearchText.getText();
+        System.out.println("Search in checkout form started for "+param);
+        try
+        {
+            String query=String.format("select * from customers where email='%s' OR room='%s' AND checkoutdate IS NULL",param,param);
+            ResultSet rs=Select.executeSelectQuery(query);
+            if(rs.next())
+            {
+                id=rs.getInt("id");
+                jnameText.setText(rs.getString("name"));
+                jcheckinText.setText(rs.getString("checkindate"));
+                jmobileText.setText(rs.getString("mobilenumber"));
+                int priceperday=0;
+                //System.out.println("Select * from rooms where roomnumber="+rs.getString("room"));
+                ResultSet rs1=Select.executeSelectQuery("Select * from rooms where roomnumber="+rs.getString("room"));
+                if(rs1.next())
+                {
+                 priceperday=rs1.getInt("price");
+                 room=rs.getString("room");
+                 bed=rs1.getString("bed");
+                 roomType=rs1.getString("roomtype");
+                 jpriceText.setText(Integer.toString(priceperday));
+                }
+                jemailText.setText(rs.getString("email"));
+                //converting checkoutdate(by default todays date) to string
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                Calendar cal=Calendar.getInstance();
+                jcheckoutText.setText(sdf.format(cal.getTime()));
+                //java.sql.Date 
+                
+                //convert checkindate(String form) from text field to Date
+                String checkindate=rs.getString("checkindate");
+                java.util.Date checkin=sdf.parse(checkindate);
+                
+                String checkoutdate=sdf.format(cal.getTime());
+                java.util.Date checkout=sdf.parse(checkoutdate);
+                long diff=checkout.getTime()-checkin.getTime();
+                int noofdaysstayed=(int)(diff/(1000*60*60*24));
+                if(noofdaysstayed==0)
+                    noofdaysstayed=1;
+                jdaysText.setText(Integer.toString(noofdaysstayed));
+                jamountText.setText(Integer.toString(noofdaysstayed*priceperday));
+                System.out.println("Search in checkout form completed for "+param);
+            }
+            else
+            {
+                System.out.println("Search results not found for "+param); 
+                JOptionPane.showMessageDialog(null,"No records found with specified value !!");
+            } 
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jsearchButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,8 +440,6 @@ public class CustomerCheckOut extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -276,12 +457,14 @@ public class CustomerCheckOut extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jamountText;
     private javax.swing.JTextField jcheckinText;
+    private javax.swing.JButton jcheckoutButton;
     private javax.swing.JTextField jcheckoutText;
     private javax.swing.JTextField jdaysText;
     private javax.swing.JTextField jemailText;
     private javax.swing.JTextField jmobileText;
     private javax.swing.JTextField jnameText;
     private javax.swing.JTextField jpriceText;
+    private javax.swing.JButton jsearchButton;
     private javax.swing.JTextField jsearchText;
     // End of variables declaration//GEN-END:variables
 }
