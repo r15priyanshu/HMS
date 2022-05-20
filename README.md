@@ -41,8 +41,8 @@ QUICK GUIDE/STEPS TO RUN THE PROJECT:
     room varchar(100) NOT NULL,
     FOREIGN KEY(room) references rooms(roomnumber)
    );
-5. Open NetBeans IDE and open the cloned Project , and Click on Run Button.
-
+5. You Need to create a new Folder in location "D:\HMS\" and this is the place where your bills will be stored. You can always change the location in CustomerCheckOut.java file
+6. Open NetBeans IDE and open the cloned Project , and Click on Run Button.
 
 # INSTRUCTION FOR ADMIN:
 SuperAdmin is hardcoded in the project , hence register with below: \
